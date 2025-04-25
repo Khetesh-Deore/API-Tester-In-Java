@@ -1,4 +1,4 @@
-package src.main.java.com.apitester;
+package com.apitester;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

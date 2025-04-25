@@ -1,2 +1,3 @@
+module-info.class
 com\apitester\ApiTester$RequestEntry.class
 com\apitester\ApiTester.class
