@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml" stylesheets="@styles.css">
+    
+    <!-- Top Bar -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 15; -fx-background-color: #e0f7fa;">
+            <Label text="API Tester & JSON Viewer" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+
+    <!-- Main Layout -->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" prefWidth="800" prefHeight="600" styleClass="tab-pane">
+            <!-- JSON Viewer Tab -->
+            <Tab text="JSON Viewer" styleClass="tab">
+                <BorderPane>
+                    <center>
+                        <TextArea fx:id="jsonViewerArea" promptText="Paste JSON here..." styleClass="code-area" />
+                    </center>
+                    <right>
+                        <VBox spacing="10" style="-fx-padding: 10;">
+                            <Label text="JSON Keys" styleClass="json-key" />
+                            <Label text="Strings" styleClass="json-string" />
+                            <Label text="Numbers" styleClass="json-number" />
+                            <Label text="Booleans" styleClass="json-boolean" />
+                            <Label text="Nulls" styleClass="json-null" />
+                        </VBox>
+                    </right>
+                </BorderPane>
+            </Tab>
+
+            <!-- API Tester Tab -->
+            <Tab text="API Tester" styleClass="tab">
+                <VBox spacing="15" style="-fx-padding: 20;">
+                    <HBox spacing="10">
+                        <ComboBox fx:id="methodComboBox" promptText="Method" styleClass="combo-box">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="GET"/>
+                                    <String fx:value="POST"/>
+                                    <String fx:value="PUT"/>
+                                    <String fx:value="DELETE"/>
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <TextField fx:id="urlField" promptText="Enter URL..." styleClass="text-field" prefWidth="400"/>
+                        <Button fx:id="sendButton" text="Send" styleClass="button"/>
+                    </HBox>
+
+                    <Label text="Headers:" style="-fx-font-weight: bold;" />
+                    <TableView fx:id="headersTable" styleClass="table-view headers-table">
+                        <columns>
+                            <TableColumn fx:id="keyColumn" text="Key"/>
+                            <TableColumn fx:id="valueColumn" text="Value"/>
+                        </columns>
+                    </TableView>
+
+                    <HBox spacing="10">
+                        <Button fx:id="addHeaderButton" text="Add Header" styleClass="add-header-button"/>
+                        <Button fx:id="removeHeaderButton" text="Remove Header" styleClass="remove-header-button"/>
+                    </HBox>
+
+                    <Label text="Response:" style="-fx-font-weight: bold;" />
+                    <TextArea fx:id="responseArea" prefRowCount="10" styleClass="code-area"/>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+
+    <!-- Status Bar -->
+    <bottom>
+        <HBox spacing="10" styleClass="status-bar">
+            <Label fx:id="statusLabel" text="Ready" styleClass="status-success"/>
+        </HBox>
+    </bottom>
+</BorderPane> 
