@@ -152,7 +152,7 @@ public class ApiTester extends Application {
 		title.getStyleClass().add("title");
 
 		formatSelector = new ComboBox<>();
-		formatSelector.getItems().addAll("Plain", "JSON", "XML");
+		formatSelector.getItems().addAll("Plain", "JSON", "XML", "HTML", "YAML"); // Added HTML and YAML
 		formatSelector.setValue("Plain");
 		formatSelector.setPrefWidth(200);
 		formatSelector.setOnAction(e -> updateResponseFormat());
@@ -162,6 +162,11 @@ public class ApiTester extends Application {
 		responseBody.setPrefRowCount(30);
 		responseBody.setPrefWidth(400);
 		responseBody.getStyleClass().add("response-area");
+
+		// Preview Button
+		Button previewButton = new Button("Preview Response");
+		previewButton.setPrefWidth(200);
+		previewButton.setOnAction(e -> previewResponse());
 
 		// Status information
 		HBox statusBox = new HBox(10);
@@ -176,7 +181,8 @@ public class ApiTester extends Application {
 				formatSelector,
 				statusBox,
 				new Label("Response:"),
-				responseBody);
+				responseBody,
+				previewButton); // Added preview button
 
 		return panel;
 	}
@@ -287,11 +293,31 @@ public class ApiTester extends Application {
 				case "XML":
 					formattedResponse = formatXml(currentResponse);
 					break;
+				case "HTML":
+					formattedResponse = formatHtml(currentResponse); // Added HTML formatting
+					break;
+				case "YAML":
+					formattedResponse = formatYaml(currentResponse); // Added YAML formatting
+					break;
 			}
 			responseBody.setText(formattedResponse);
 		} catch (Exception e) {
 			responseBody.setText("Error formatting response: " + e.getMessage());
 		}
+	}
+
+	private String formatHtml(String html) {
+		// Implement HTML formatting logic here
+		return html;
+	}
+
+	private String formatYaml(String yaml) {
+		// Implement YAML formatting logic here
+		return yaml;
+	}
+
+	private void previewResponse() {
+		// Implement preview logic here, possibly opening a new window or dialog
 	}
 
 	private String formatJson(String json) {
