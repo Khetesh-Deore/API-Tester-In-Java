@@ -220,7 +220,7 @@ public class ApiTester extends Application {
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
 					.uri(URI.create(url))
-					.header("Content-Type", "application/json"); // Ensure JSON content type
+					.header("Content-Type", "application/json");
 
 			switch (method) {
 				case "GET":
@@ -239,10 +239,10 @@ public class ApiTester extends Application {
 					requestBuilder.DELETE();
 					break;
 				case "HEAD":
-					requestBuilder.method("HEAD", HttpRequest.BodyPublishers.noBody()); // Added HEAD
+					requestBuilder.method("HEAD", HttpRequest.BodyPublishers.noBody());
 					break;
 				case "OPTIONS":
-					requestBuilder.method("OPTIONS", HttpRequest.BodyPublishers.noBody()); // Added OPTIONS
+					requestBuilder.method("OPTIONS", HttpRequest.BodyPublishers.noBody());
 					break;
 			}
 
@@ -258,13 +258,20 @@ public class ApiTester extends Application {
 				// Update status information
 				long duration = System.currentTimeMillis() - requestStartTime;
 				statusLabel.setText("Status: " + r.statusCode());
-				statusLabel.getStyleClass()
-						.add(r.statusCode() >= 200 && r.statusCode() < 300 ? "status-success" : "status-error");
+				statusLabel.getStyleClass().clear(); // Clear previous styles
+				statusLabel.getStyleClass().add(r.statusCode() >= 200 && r.statusCode() < 300 ? "status-success" : "status-error");
 				timeLabel.setText("Time: " + duration + "ms");
 				sizeLabel.setText("Size: " + formatSize(r.body().length()));
+			}).exceptionally(e -> {
+				// Handle exceptions such as URL not found
+				statusLabel.setText("Error: " + e.getMessage());
+				statusLabel.getStyleClass().clear(); // Clear previous styles
+				statusLabel.getStyleClass().add("status-error");
+				return null;
 			});
 		} catch (Exception e) {
 			statusLabel.setText("Error: " + e.getMessage());
+			statusLabel.getStyleClass().clear(); // Clear previous styles
 			statusLabel.getStyleClass().add("status-error");
 		}
 	}
