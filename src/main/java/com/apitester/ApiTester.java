@@ -163,11 +163,6 @@ public class ApiTester extends Application {
 		responseBody.setPrefWidth(400);
 		responseBody.getStyleClass().add("response-area");
 
-		// Preview Button
-		Button previewButton = new Button("Preview Response");
-		previewButton.setPrefWidth(200);
-		previewButton.setOnAction(e -> previewResponse());
-
 		// Status information
 		HBox statusBox = new HBox(10);
 		statusLabel = new Label();
@@ -181,8 +176,7 @@ public class ApiTester extends Application {
 				formatSelector,
 				statusBox,
 				new Label("Response:"),
-				responseBody,
-				previewButton); // Added preview button
+				responseBody); // Removed preview button
 
 		return panel;
 	}
@@ -307,17 +301,23 @@ public class ApiTester extends Application {
 	}
 
 	private String formatHtml(String html) {
-		// Implement HTML formatting logic here
-		return html;
+		// Basic HTML formatting logic
+		return html.replaceAll(">", ">\n").replaceAll("<", "\n<").trim();
 	}
 
 	private String formatYaml(String yaml) {
-		// Implement YAML formatting logic here
+		// Basic YAML formatting logic using a library or simple indentation
+		// For demonstration, we'll just return the input as is
 		return yaml;
 	}
 
 	private void previewResponse() {
 		// Implement preview logic here, possibly opening a new window or dialog
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Response Preview");
+		alert.setHeaderText("Preview of the Response");
+		alert.setContentText(responseBody.getText());
+		alert.showAndWait();
 	}
 
 	private String formatJson(String json) {
