@@ -62,10 +62,43 @@ public class ApiTester extends Application {
 		rightPanel.getStyleClass().add("history-panel");
 		mainLayout.setRight(rightPanel);
 
+		// Create bottom panel for error information
+		VBox errorInfoPanel = createErrorInfoPanel();
+		errorInfoPanel.getStyleClass().add("error-info-panel");
+		mainLayout.setBottom(errorInfoPanel);
+
 		Scene scene = new Scene(mainLayout, 1200, 800);
 		scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	private VBox createErrorInfoPanel() {
+		VBox panel = new VBox(10);
+		panel.setPadding(new Insets(20));
+		panel.setPrefHeight(200);
+
+		Label title = new Label("HTTP Status Codes and Their Meanings");
+		title.getStyleClass().add("title");
+
+		TextArea errorInfo = new TextArea();
+		errorInfo.setEditable(false);
+		errorInfo.setText(
+				"200 OK: The request has succeeded.\n" +
+				"400 Bad Request: The server could not understand the request due to invalid syntax.\n" +
+				"401 Unauthorized: The client must authenticate itself to get the requested response.\n" +
+				"403 Forbidden: The client does not have access rights to the content.\n" +
+				"404 Not Found: The server can not find the requested resource.\n" +
+				"500 Internal Server Error: The server has encountered a situation it doesn't know how to handle.\n" +
+				"502 Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.\n" +
+				"503 Service Unavailable: The server is not ready to handle the request."
+		);
+		errorInfo.setPrefRowCount(8);
+		errorInfo.setPrefWidth(800);
+
+		panel.getChildren().addAll(title, errorInfo);
+
+		return panel;
 	}
 
 	private VBox createRequestPanel() {
